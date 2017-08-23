@@ -1,5 +1,15 @@
 extends layout
 
 block content
-	h1 Add New Article
 	h2 #{title}
+	form(method="post", action="/articles/add")
+		#form-group
+			label Title:
+			input.form-control(name="title", type="text")
+		#form-group
+			label Author:
+			input.form-control(name="author", type="text")
+		#form-group
+			label Body:
+			textarea.form-control(name="body")
+		input.btn.btn-primary(value="Save", type="submit")
