@@ -72,7 +72,14 @@ app.post('/articles/add', (req, res) => {
 	})
 });
 
-
+// get single article via id
+app.get('/articles/:id', (req, res) => {
+	Article.findById(req.params.id, (err, article) => {
+		res.render('article', {
+			article: article
+		});
+	});;
+});
 
 app.listen(port, (req, res) => {
 	console.log('Listening to port ' + port);
