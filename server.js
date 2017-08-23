@@ -78,7 +78,50 @@ app.get('/articles/:id', (req, res) => {
 		res.render('article', {
 			article: article
 		});
-	});;
+	});
+});
+
+// load edit article form
+app.get('/article/edit/:id', (req, res) => {
+	Article.findById(req.params.id, (err, article) => {
+		res.render('edit_article', {
+			title: 'Edit Current Article',
+			article: article
+		});
+	});
+});
+
+// update current article
+app.post('/article/edit/:id', (req, res) => {
+	let article = {};
+
+	article.title = req.body.title;
+	article.author = req.body.author;
+	article.body = req.body.body;
+
+	let article_query = {_id: req.params.id};
+
+	Article.update(article_query, article, (err) => {
+		if(err){
+			console.error(err);
+			return
+		} else {
+			res.redirect('/articles/' + req.params.id);
+		}
+	});
+});
+
+// delete unwanted article
+app.delete('/article/:id', (req, res) => {
+	let article_query = {_id: req.params.id}
+
+	Article.remove(article_query, (err) => {
+		if(err){
+			console.error(err)
+		}
+
+		res.sendStatus(200);
+	});
 });
 
 app.listen(port, (req, res) => {
