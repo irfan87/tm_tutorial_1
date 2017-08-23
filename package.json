@@ -1,0 +1,22 @@
+{
+  "name": "node_kb",
+  "version": "1.0.0",
+  "description": "simple Knowledgebase NodeJS app",
+  "main": "server.js",
+  "scripts": {
+    "start": "nodemon server"
+  },
+  "keywords": [
+    "NodeJS",
+    "Express",
+    "MongoDB"
+  ],
+  "author": "Irfan",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.15.4"
+  },
+  "devDependencies": {
+    "nodemon": "^1.11.0"
+  }
+}
