@@ -31,6 +31,9 @@ app.set('view engine', 'pug');
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 
+// set public folder
+app.use(express.static(path.join(__dirname, 'public')));
+
 // home route
 app.get('/', (req, res) => {
 	Article.find({}, (err, articles) => {
@@ -68,6 +71,8 @@ app.post('/articles/add', (req, res) => {
 		}
 	})
 });
+
+
 
 app.listen(port, (req, res) => {
 	console.log('Listening to port ' + port);

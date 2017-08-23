@@ -2,9 +2,6 @@ extends layout
 
 block content
 	h1 Articles List
-	ul
+	ul.list-group
 		each article, i in articles
-			li=article.title
-				p=article.body
-				h5=article.author
-				small=article.created_date
+			li.list-group-item=article.title
