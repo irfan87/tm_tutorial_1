@@ -1,1 +1,10 @@
-h1 Hi Developer! Welcome to Node-land!
+extends layout
+
+block content
+	h1 Articles List
+	ul
+		each article, i in articles
+			li=article.title
+				p=article.body
+				h5=article.author
+				small=article.created_date
