@@ -12,7 +12,7 @@ let db = mongoose.connection;
 
 // check for db errors
 db.on('error', (err) => {
-	console.error(err);
+	console.log(err);
 });
 
 // check connection
@@ -46,7 +46,7 @@ app.use(session({
 
 // express messages middleware
 app.use(require('connect-flash')());
-app.use(function (req, res, next) {
+app.use((req, res, next) => {
   res.locals.messages = require('express-messages')(req, res);
   next();
 });
@@ -73,7 +73,7 @@ app.use(expressValidator({
 app.get('/', (req, res) => {
 	Article.find({}, (err, articles) => {
 		if(err){
-			console.error(err);
+			console.log(err);
 		} else {
 				res.render('index', {
 				title: 'Articles',
@@ -94,12 +94,12 @@ app.get('/articles/add', (req, res) => {
 app.post('/articles/add', (req, res) => {
 	req.checkBody('title', 'Title is required').notEmpty();
 	req.checkBody('author', 'Author is required').notEmpty();
-	req.checkBody('body', 'Body is required').notEmpty();
-	
-	// get the error
-	let errors = req.getValidationResult();
+	req.checkBody('body', 'Article\'s body is required').notEmpty();
 
-	if(errors){
+	// get the error if the field are empty
+	let errors = req.validationErrors();
+
+	if(errors) {
 		res.render('add_article', {
 			title: 'Add new article',
 			errors: errors
@@ -153,7 +153,7 @@ app.post('/article/edit/:id', (req, res) => {
 
 	Article.update(article_query, article, (err) => {
 		if(err){
-			console.error(err);
+			console.log(err);
 			return
 		} else {
 			req.flash("success", "Article updated");
@@ -168,7 +168,7 @@ app.delete('/article/:id', (req, res) => {
 
 	Article.remove(article_query, (err) => {
 		if(err){
-			console.error(err)
+			console.log(err)
 		}
 
 		res.sendStatus(200);
