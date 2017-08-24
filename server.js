@@ -85,8 +85,10 @@ app.get('/', (req, res) => {
 
 // Router files
 let articles = require('./routes/articles');
+let users = require('./routes/users');
 
 app.use('/articles', articles);
+app.use('/users', users);
 
 app.listen(port, (req, res) => {
 	console.log('Listening to port ' + port);
