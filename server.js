@@ -5,9 +5,11 @@ const bodyParser = require('body-parser');
 const expressValidator = require('express-validator');
 const flash = require('connect-flash');
 const session = require('express-session');
+const config = require('./config/database');
+const passport = require('passport');
 
 mongoose.Promise = global.Promise;
-mongoose.connect('mongodb://localhost/node_kb', {useMongoClient: true});
+mongoose.connect(config.database, {useMongoClient: true});
 let db = mongoose.connection;
 
 // check for db errors
@@ -68,6 +70,19 @@ app.use(expressValidator({
     };
   }
 }));
+
+// passport config
+require('./config/passport')(passport);
+
+// passport middleware
+app.use(passport.initialize());
+app.use(passport.session());	
+
+// user global variable
+app.get('*', (req, res, next) => {
+	res.locals.user = req.user || null;
+	next();
+});
 
 // home route
 app.get('/', (req, res) => {
